@@ -1,9 +1,53 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_mary/ui/pages/Home_page.dart';
+import 'package:flutter_application_mary/ui/pages/create_groups_page.dart';
+import 'package:flutter_application_mary/ui/pages/create_sesion_page.dart';
+import 'package:flutter_application_mary/ui/pages/login_page.dart';
+import 'package:get/get.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'Gestion tutorias',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+       home: const CreateSesion(),
+      // rutas
+      initialRoute: '/login',
+      getPages: [
+        GetPage(
+            name: '/login',
+            page: () => const LoginPage(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/register',
+            page: () => const LoginPage(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/home',
+            page: () =>  Home_page(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/group',
+            page: () => const CreateGroups(),
+            transition: Transition.fadeIn),
+       GetPage(
+            name: '/sesion',
+            page: () => const CreateSesion(),
+            transition: Transition.fadeIn),
+      ],
+    );
+  }
+
+
+/**
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -112,4 +156,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+ */
 }

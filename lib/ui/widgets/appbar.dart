@@ -33,10 +33,10 @@ class CustomAppBar extends AppBar {
           actions: [
             IconButton(
                 onPressed: () {
-                  Get.off(() => LoginPage());
+                  Get.off(() => const LoginPage());
                 },
-                icon: Icon(Icons.logout)),
+                icon: const Icon(Icons.logout)),
           ],
-          backgroundColor: Color.fromARGB(255, 83, 68, 145),
+          backgroundColor: const Color.fromARGB(255, 83, 68, 145),
         );
 }

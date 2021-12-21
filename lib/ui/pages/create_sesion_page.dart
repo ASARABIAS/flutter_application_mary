@@ -21,6 +21,7 @@ class _createsesionstate extends State<CreateSesion> {
     return SafeArea(
       child: Scaffold(
         body: Center(
+          
           child: Column(
             children: [
               const SizedBox(
@@ -39,7 +40,9 @@ class _createsesionstate extends State<CreateSesion> {
                 height: 20.0,
               ),
               _buttonCreate(),
+              
             ],
+            
           ),
         ),
       ),

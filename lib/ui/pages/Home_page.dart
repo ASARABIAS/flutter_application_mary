@@ -1,62 +1,127 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_mary/ui/pages/create_groups_page.dart';
-import 'package:flutter_application_mary/ui/pages/create_sesion_page.dart';
-import 'package:flutter_application_mary/ui/theme/theme_controller.dart';
-import 'package:flutter_application_mary/ui/widgets/appbar.dart';
-import 'package:get/get.dart';
 
+class HomePage extends StatefulWidget {
 
-class Home_page extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
-  State<Home_page> createState() => _MyNav();
+  _homesstate createState() => _homesstate();
 }
 
-class _MyNav extends State<Home_page> {
-  final ThemeController controller = Get.find();
-  int _paginaActual = 0;
-  final List<Widget> _paginas = [
-    Home_page(),
-    CreateGroups(),
-    CreateSesion(),
-  ];
-
+class _homesstate extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //debugShowCheckedModeBanner: false,
-      //title: 'Mintic',
-      //home: Scaffold(
-      appBar: CustomAppBar(
-        controller: controller,
-        tile: const Text("ProsperTv"),
-        context: context,
-      ),
-      body: _paginas[_paginaActual],
-      bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Colors.purple[700],
-        type: BottomNavigationBarType.fixed,
-        onTap: (posicion) {
-          setState(() {
-            _paginaActual = posicion;
-          });
-        },
-        currentIndex: _paginaActual,
-        items: const <BottomNavigationBarItem>[
-           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.groups_outlined,
-              key: ValueKey("groupsTab"),
-            ),
-            label: "Groups",
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.more_time_outlined,
-                key: ValueKey("sesionsTab"),
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 200.0,
               ),
-              label: "Sesions")
-        ],
+              _nameTextField(),
+              const SizedBox(
+                height: 15.0,
+              ),
+              _user1TextField(),
+              const SizedBox(
+                height: 15.0,
+              ),
+              _user2TextField(),
+              const SizedBox(
+                height: 20.0,
+              ),
+              _buttonCreate(),
+            ],
+          ),
+        ),
       ),
     );
   }
+
+   _nameTextField() {
+     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: const InputDecoration(  
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.deepPurple),
+            ),
+            icon: Icon(Icons.group_work),
+            labelText: 'Nombre -Id del grupo',  
+            hintText: 'grupo #',  
+            fillColor: Colors.white30,
+             ),
+        onChanged: (text) {
+
+        },
+      ),
+    );
+  }
+
+   
+
+  _user1TextField() {
+     return Container(
+      padding:const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: const InputDecoration(  
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.deepPurple),
+            ),
+            icon: Icon(Icons.person),
+            labelText: 'Nombre Estudiante 1',  
+            hintText: 'pepito perez',  
+            fillColor: Colors.white30,
+             ),
+        onChanged: (text) {
+
+        },
+      ),
+    );
+  }
+
+
+ _user2TextField() {
+     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: const InputDecoration(  
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.deepPurple),
+            ),
+            icon: Icon(Icons.person),
+            labelText: 'Nombre Estudiante 2',  
+            hintText: 'pepito perez',  
+            fillColor: Colors.white30,
+             ),
+        onChanged: (text) {
+
+        },
+      ),
+    );
+  }
+
+  _buttonCreate() {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+        child: MaterialButton(
+          color: Colors.blue,
+          minWidth: 250.0,
+          height: 50.0,
+          child: const Text('Crear grupo',
+              style:TextStyle(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.bold)),
+          onPressed: () {
+           
+          },
+        ));
+  }
+
+  
 }

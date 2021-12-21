@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'colors.dart';
 
 class MyTheme {
@@ -7,7 +8,7 @@ class MyTheme {
       brightness: Brightness.light,
       primarySwatch: AppColors.createMaterialColor(AppColors.primaryColor),
       colorScheme: AppColors.lightScheme,
-      //fontFamily: AppTextStyle.fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
       ),
@@ -15,6 +16,7 @@ class MyTheme {
         border: const OutlineInputBorder(),
         fillColor: Colors.grey.shade300,
       ),
+      scaffoldBackgroundColor: Colors.grey.shade200,
     );
   }
 
@@ -25,10 +27,10 @@ class MyTheme {
       brightness: Brightness.dark,
       primarySwatch: AppColors.createMaterialColor(AppColors.primaryColor),
       colorScheme: AppColors.darkScheme,
+      fontFamily: GoogleFonts.openSans().fontFamily,
       toggleableActiveColor:
           AppColors.createMaterialColor(AppColors.primaryColor).shade500,
       // this can all be copied, waiting for verification
-      //fontFamily: AppTextStyle.fontFamily,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
       ),

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
 
-  const LoginPage({Key? key}) : super(key: key);
+  const RegisterPage({Key? key}) : super(key: key);
   
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
 
-  String _user = '', _password = '';
+  String _user = '', _password = '', _name = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +23,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            childText('Gestión de Tutorias \n Inicio de Sesion', 25.0,
+            childText('Gestión de Tutorias \n Registrarse', 25.0,
                 FontWeight.bold,const Color.fromRGBO(0, 151, 236, 1.0)),
             divider(40.0),
+            _inputText(false, 'Nombre', 'Nombre',const Icon(Icons.person), _name),
+            divider(20.0),
             _inputText(false, 'Email', 'Email',const Icon(Icons.email), _user),
             divider(20.0),
             _inputText(
@@ -33,7 +35,6 @@ class _LoginPageState extends State<LoginPage> {
             divider(40.0),
             _btnIniciar(),
             divider(20.0),
-            _btnRegistrar(),
           ],
         ),
       ),
@@ -53,25 +54,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buttonOlvidar() {
-    return MaterialButton(
-      child: childText('Olvidé mi Contraseña', 15.0, FontWeight.bold,
-          const Color.fromRGBO(102, 102, 102, 1.0)),
-      onPressed: () {
-        _mostrarAlerta(context);
-      },
-    );
-  }
 
-  Widget _btnRegistrar() {
-    return MaterialButton(
-      child: childText('Crear una cuenta', 15.0, FontWeight.bold,
-         const  Color.fromRGBO(102, 102, 102, 1.0)),
-      onPressed: () {
-        Get.toNamed('/register');
-      },
-    );
-  }
+
 
   Widget _btnIniciar() {
     return MaterialButton(
@@ -86,40 +70,11 @@ class _LoginPageState extends State<LoginPage> {
         Get.toNamed('/Nav');
       },
       child: childText(
-          'INICIAR', 15.0, FontWeight.bold,const Color.fromRGBO(230, 230, 230, 1.0)),
+          'REGISTRARSE', 15.0, FontWeight.bold,const Color.fromRGBO(230, 230, 230, 1.0)),
     );
   }
 
-  void _mostrarAlerta(BuildContext context) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title:const Text('Restablecer Contraseña'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _inputText(false, 'Email', 'Email',const Icon(Icons.email), _user),
-              ],
-            ),
-            actions: [
-              MaterialButton(
-                onPressed: () => Get.toNamed('/register'),
-                child:const Text('Cancelar'),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  Get.toNamed('/register');
-                },
-                child:const Text('OK'),
-              )
-            ],
-          );
-        });
-  }
+ 
 
   Widget childText(
       String texto, double fontSize, FontWeight fontWeight, Color color) {

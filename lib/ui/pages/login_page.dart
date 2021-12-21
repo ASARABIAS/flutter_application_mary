@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_mary/domain/authentication.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,69 +13,98 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  String _user = '', _password = '';
+final _formKey = GlobalKey<FormState>();
+  final controllerEmail = TextEditingController();
+  final controllerPassword = TextEditingController();
+  AuthenticationController authenticationController = Get.find();
+
+  _login(theEmail, thePassword) async {
+    print('_login $theEmail $thePassword');
+    try {
+      _login(controllerEmail, controllerPassword);
+      
+    } catch (err) {
+      Get.snackbar(
+        "Login",
+        err.toString(),
+        icon: const Icon(Icons.person, color: Colors.red),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(230, 230, 230, 1.0),
-      body: Container(
-        //decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-        padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            childText('Gestión de Tutorias \n Inicio de Sesion', 25.0,
-                FontWeight.bold,const Color.fromRGBO(0, 151, 236, 1.0)),
-            divider(40.0),
-            _inputText(false, 'Email', 'Email',const Icon(Icons.email), _user),
-            divider(20.0),
-            _inputText(
-                true, 'Password', 'Password',const Icon(Icons.lock), _password),
-            divider(40.0),
-            _btnIniciar(),
-            divider(20.0),
-            _btnRegistrar(),
-          ],
-        ),
+    return Container(
+      padding:const EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Form(
+            key: _formKey,
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Text(
+                "Login with email",
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                key: const ValueKey("loginEmail"),
+                keyboardType: TextInputType.emailAddress,
+                controller: controllerEmail,
+                decoration: const InputDecoration(labelText: "Email address"),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter email";
+                  } else if (!value.contains('@')) {
+                    return "Enter valid email address";
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                key: const ValueKey("loginPassword"),
+                controller: controllerPassword,
+                decoration: const InputDecoration(labelText: "Password"),
+                keyboardType: TextInputType.number,
+                obscureText: true,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter password";
+                  } else if (value.length < 6) {
+                    return "Password should have at least 6 characters";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              _btnIniciar(),
+               
+            ]),
+          ),
+          TextButton(
+              onPressed: () {
+              
+                
+              },
+              child: const Text("Create cuenta"))
+        ],
       ),
     );
   }
 
-  Widget _inputText(bool obscureText, String hintText, String labelText,
-      Icon icon, String input) {
-    return TextField(
-      obscureText: obscureText,
-      decoration: inputDecoration(hintText, labelText, icon),
-      onChanged: (valor) {
-        setState(() {
-          input = valor;
-        });
-      },
-    );
-  }
+   Widget _btnIniciar() {
 
-  Widget _buttonOlvidar() {
     return MaterialButton(
-      child: childText('Olvidé mi Contraseña', 15.0, FontWeight.bold,
-          const Color.fromRGBO(102, 102, 102, 1.0)),
-      onPressed: () {
-        _mostrarAlerta(context);
-      },
-    );
-  }
-
-  Widget _btnRegistrar() {
-    return MaterialButton(
-      child: childText('Crear una cuenta', 15.0, FontWeight.bold,
-         const  Color.fromRGBO(102, 102, 102, 1.0)),
-      onPressed: () {
-        Get.toNamed('/register');
-      },
-    );
-  }
-
-  Widget _btnIniciar() {
-    return MaterialButton(
+      
       shape: const StadiumBorder(),
       padding: const EdgeInsets.only(left: 50.0, right: 50.0),
       height: 50.0,
@@ -82,73 +112,16 @@ class _LoginPageState extends State<LoginPage> {
       textColor: Colors.white,
       focusColor: Colors.blue,
       splashColor: Colors.blue,
-      onPressed: () {
-        Get.toNamed('/Nav');
+      onPressed: () async {
+                  // this line dismiss the keyboard by taking away the focus of the TextFormField and giving it to an unused
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  final form = _formKey.currentState;
+                  form!.save();
+                  if (_formKey.currentState!.validate()) {
+                    await _login(controllerEmail.text, controllerPassword.text);
+                  }
       },
-      child: childText(
-          'INICIAR', 15.0, FontWeight.bold,const Color.fromRGBO(230, 230, 230, 1.0)),
-    );
-  }
-
-  void _mostrarAlerta(BuildContext context) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title:const Text('Restablecer Contraseña'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _inputText(false, 'Email', 'Email',const Icon(Icons.email), _user),
-              ],
-            ),
-            actions: [
-              MaterialButton(
-                onPressed: () => Get.toNamed('/register'),
-                child:const Text('Cancelar'),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  Get.toNamed('/register');
-                },
-                child:const Text('OK'),
-              )
-            ],
-          );
-        });
-  }
-
-  Widget childText(
-      String texto, double fontSize, FontWeight fontWeight, Color color) {
-    return Text(
-      texto,
-      style: TextStyle(
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color,
-      ),
-      textAlign: TextAlign.center,
-    );
-  }
-
-  Widget divider(double size) {
-    return SizedBox(
-      height: size,
-    );
-  }
-
-  InputDecoration inputDecoration(
-      String hintText, String labelText, Icon icon) {
-    return InputDecoration(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      hintText: hintText,
-      labelText: labelText,
-      suffixIcon: icon,
+      child: const Text('INICIAR'),
     );
   }
 }

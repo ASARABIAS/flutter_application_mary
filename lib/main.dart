@@ -60,17 +60,3 @@ class MyApp extends StatelessWidget {
 
 }
 
-
-/**
- * 
- *final ThemeController controller = Get.put(ThemeController());
-            late final ThemeManager manager = ThemeManager();
-            Future<void> initializeTheme() async {
-              controller.darkMode = await manager.storedTheme;
-            }
-
-            ever(controller.reactiveDarkMode, (bool isDarkMode) {
-              manager.changeTheme(isDarkMode: isDarkMode);
-            });
-            initializeTheme();
- */
